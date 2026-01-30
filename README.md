@@ -34,27 +34,26 @@ This pattern ensures scalability, fault tolerance, and clean separation between 
 ---
 
 ## Architecture
-
+<pre>
 Client
-│
-▼
-AWS AppSync (GraphQL)
-│
-▼
-submitJob Lambda
-│
-├─ Write job record (QUEUED) → DynamoDB (jobs table)
-└─ Send message → SQS Queue (+ DLQ)
-│
-▼
-job_worker Lambda
-│
-├─ Update job → RUNNING
-├─ Generate report (filter + aggregate)
-├─ Persist result
-└─ Update job → SUCCEEDED / FAILED
-
-
+  │
+  ▼
+  AWS AppSync (GraphQL)
+    │
+    ▼
+    submitJob Lambda
+      │
+      ├─ Write job record (QUEUED) → DynamoDB (jobs table)
+      └─ Send message → SQS Queue (+ DLQ)
+        │
+        ▼
+        job_worker Lambda
+          │
+          ├─ Update job → RUNNING
+          ├─ Generate report (filter + aggregate)
+          ├─ Persist result
+          └─ Update job → SUCCEEDED / FAILED
+</pre>
 ---
 
 ## Job Lifecycle
