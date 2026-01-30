@@ -9,26 +9,26 @@ The architecture separates request handling from long-running computation to ens
 Client → AppSync → Lambda → SQS → Lambda → DynamoDB
 
 Client
-  │
-  ▼
+│
+▼
 AWS AppSync (GraphQL)
-  │
-  ▼
+│
+▼
 submitJob Lambda
-  │
-  ├─ Write job record (QUEUED)
-  └─ Enqueue message to SQS
-           │
-           ▼
-     SQS Queue (+ DLQ)
-           │
-           ▼
-     job_worker Lambda
-           │
-           ├─ Update job → RUNNING
-           ├─ Generate report
-           ├─ Persist result
-           └─ Update job → SUCCEEDED / FAILED
+│
+├─ Write job record (QUEUED)
+└─ Enqueue message to SQS
+│
+▼
+SQS Queue (+ DLQ)
+│
+▼
+job_worker Lambda
+│
+├─ Update job → RUNNING
+├─ Generate report
+├─ Persist result
+└─ Update job → SUCCEEDED / FAILED
 
 
 ## Components
