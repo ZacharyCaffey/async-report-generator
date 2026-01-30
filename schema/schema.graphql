@@ -1,0 +1,61 @@
+input CreateJobInput {
+  reportType: String!
+  clientId: String
+  planType: String
+  startDate: String!
+  endDate: String!
+}
+
+type Job {
+  id: ID!
+  status: JobStatus!
+  type: String
+  createdAt: String!
+  updatedAt: String!
+  result: ReportResult
+  error: String
+}
+
+enum JobStatus {
+  QUEUED
+  RUNNING
+  SUCCEEDED
+  FAILED
+}
+
+type Report {
+  clientId: String!
+  planType: String!
+  coverageStartDate: String!
+  coverageEndDate: String!
+  reportType: String!
+  generatedAt: String!
+  summary: ReportSummary!
+}
+
+type ReportFilters {
+  clientId: String
+  planType: String
+  startDate: String!
+  endDate: String!
+}
+
+type ReportResult {
+  generatedAt: String!
+  resultCount: Int!
+  filtersApplied: ReportFilters!
+  reports: [Report!]!
+}
+
+type ReportSummary {
+  totalEnrollments: Int
+  totalDeductions: Float!
+}
+
+type Mutation {
+  submitJob(input: CreateJobInput!): Job!
+}
+
+type Query {
+  job(id: ID!): Job
+}
